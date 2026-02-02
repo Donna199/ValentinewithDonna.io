@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine? 💕</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Patrick+Hand&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pink: #ffb3d1;
+            --rose: #ffc9e0;
+            --deep-red: #c41e3a;
+            --bright-red: #ff1744;
+            --cream: #fffbfc;
+            --outline: #d4005f;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Patrick Hand', cursive;
+            min-height: 100vh;
+            background: var(--cream);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hearts-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            background: white;
+            padding: 3rem;
+            border-radius: 40px;
+            border: 4px solid var(--outline);
+            box-shadow: 8px 8px 0 var(--pink);
+            text-align: center;
+            max-width: 550px;
+            width: 90%;
+            position: relative;
+        }
+
+        h1 {
+            font-family: 'Caveat', cursive;
+            font-size: 3.5rem;
+            color: var(--bright-red);
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 0 var(--pink);
+            animation: wiggle 3s infinite;
+            line-height: 1.2;
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(-2deg); }
+            50% { transform: rotate(2deg); }
+        }
+
+        .subtitle {
+            font-family: 'Caveat', cursive;
+            font-size: 1.5rem;
+            color: var(--deep-red);
+            margin-bottom: 2rem;
+        }
+
+        .button-container {
+            position: relative;
+            min-height: 220px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        button {
+            font-family: 'Patrick Hand', cursive;
+            font-weight: 600;
+            border: 3px solid var(--deep-red);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.4rem;
+            padding: 1rem 2.5rem;
+            box-shadow: 5px 5px 0 var(--outline);
+            position: relative;
+        }
+
+        button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            transition: width 0.3s, height 0.3s;
+        }
+
+        button:active::after {
+            width: 100%;
+            height: 100%;
+        }
+
+        #yesBtn {
+            background: var(--bright-red);
+            color: white;
+            transform: scale(1);
+            transition: transform 0.3s ease;
+        }
+
+        #yesBtn:hover {
+            transform: scale(1.05) rotate(-2deg);
+            box-shadow: 7px 7px 0 var(--outline);
+        }
+
+        #noBtn {
+            background: white;
+            color: var(--deep-red);
+            border: 3px solid var(--deep-red);
+            position: fixed;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        #noBtn:hover {
+            background: var(--rose);
+            transform: rotate(2deg);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            font-family: 'Caveat', cursive;
+            font-weight: 700;
+            color: var(--deep-red);
+            margin-bottom: 0.5rem;
+            font-size: 1.6rem;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 3px solid var(--outline);
+            border-radius: 20px;
+            font-family: 'Patrick Hand', cursive;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            background: white;
+            box-shadow: 3px 3px 0 var(--pink);
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--bright-red);
+            background: var(--cream);
+            transform: translateY(-2px);
+            box-shadow: 5px 5px 0 var(--pink);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        #submitBtn {
+            background: var(--bright-red);
+            color: white;
+            width: 100%;
+            padding: 1.2rem;
+            font-size: 1.5rem;
+            margin-top: 1rem;
+            border: 3px solid var(--deep-red);
+        }
+
+        #submitBtn:hover {
+            transform: scale(1.02) rotate(-1deg);
+            box-shadow: 7px 7px 0 var(--outline);
+        }
+
+        .success-message {
+            color: var(--bright-red);
+            font-size: 1.3rem;
+            margin-top: 1rem;
+            animation: fadeIn 0.5s ease;
+            font-family: 'Caveat', cursive;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .celebration {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: bounce 1s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+
+        .button-container {
+            position: relative;
+            min-height: 220px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        #yesBtn {
+            background: var(--bright-red);
+            color: white;
+            transform: scale(1);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts-background" id="heartsContainer"></div>
+    <div class="container" id="page1">
+        <h1>Be My Valentine? 💖</h1>
+        <p class="subtitle">✨ Pretty please? ✨</p>
+        <div class="button-container">
+            <button id="yesBtn">Yup! 😊</button>
+            <button id="noBtn">Nah</button>
+        </div>
+    </div>
+
+    <div class="container hidden" id="page2">
+        <div class="celebration">🎉💕🎊</div>
+        <h1>Yay! 🥰</h1>
+        <form id="valentineForm" method="POST">
+            <div class="form-group">
+                <label for="email">📧 Your email:</label>
+                <input type="email" id="email" name="_replyto" required placeholder="your.email@example.com">
+            </div>
+            <div class="form-group">
+                <label for="message">💌 Leave a message for Donna:</label>
+                <input type="text" id="message" name="message" required placeholder="Your sweet message...">
+            </div>
+            <div class="form-group">
+                <label for="activity">🌹 What do you want to do on Valentine's Day?</label>
+                <textarea id="activity" name="activity" required placeholder="Dinner? Movie? Adventure?"></textarea>
+            </div>
+            <button type="submit" id="submitBtn">Send to Donna 💘</button>
+            <div id="statusMessage"></div>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const page1 = document.getElementById('page1');
+        const page2 = document.getElementById('page2');
+        
+        let yesBtnScale = 1;
+        let noClickCount = 0;
+
+        function positionNoButton() {
+            const yesBtnRect = yesBtn.getBoundingClientRect();
+            noBtn.style.left = (yesBtnRect.right + 40) + 'px';
+            noBtn.style.top = yesBtnRect.top + 'px';
+        }
+
+        setTimeout(positionNoButton, 100);
+        window.addEventListener('resize', positionNoButton);
+        noBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            noClickCount++;
+            const btnRect = noBtn.getBoundingClientRect();
+            const yesBtnRect = yesBtn.getBoundingClientRect();
+            const margin = 30;
+            const maxX = window.innerWidth - btnRect.width - margin;
+            const maxY = window.innerHeight - btnRect.height - margin;
+            
+            let randomX, randomY;
+            let attempts = 0;
+
+            do {
+                randomX = Math.random() * (maxX - margin) + margin;
+                randomY = Math.random() * (maxY - margin) + margin;
+                attempts++;
+            } while (
+                attempts < 30 &&
+                randomX < yesBtnRect.right + 100 &&
+                randomX + btnRect.width > yesBtnRect.left - 100 &&
+                randomY < yesBtnRect.bottom + 100 &&
+                randomY + btnRect.height > yesBtnRect.top - 100
+            );
+            
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+            noBtn.style.transform = `rotate(${Math.random() * 20 - 10}deg)`;
+            
+            yesBtnScale += 0.15;
+            yesBtn.style.transform = `scale(${yesBtnScale})`;
+            
+            if (noClickCount >= 3) {
+                noBtn.textContent = 'Please? 🥺';
+            }
+            if (noClickCount >= 5) {
+                noBtn.textContent = 'Come on! 💔';
+            }
+            if (noClickCount >= 7) {
+                noBtn.textContent = 'Pretty please! 🙏';
+            }
+        });
+
+        yesBtn.addEventListener('click', function() {
+            page1.classList.add('hidden');
+            page2.classList.remove('hidden');
+        });
+
+        (function(){
+            emailjs.init("Ezx32uFymOpx-_dFl");
+        })();
+
+        const form = document.getElementById('valentineForm');
+        const statusMessage = document.getElementById('statusMessage');
+        const submitBtn = document.getElementById('submitBtn');
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            const activity = document.getElementById('activity').value;
+
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Sending... 💌';
+            submitBtn.disabled = true;
+            
+            const templateParams = {
+                from_email: email,
+                to_email: 'le293@purdue.edu',
+                message: message,
+                activity: activity,
+                date: new Date().toLocaleString()
+            };
+
+            try {
+                await emailjs.send('service_fq9xypq', 'template_5oegkze', templateParams);
+                
+                statusMessage.innerHTML = '<div class="success-message">✨ Message sent successfully! Donna will be so excited! 💕</div>';
+                form.reset();
+                
+                const celebration = document.querySelector('.celebration');
+                if (celebration) {
+                    celebration.style.animation = 'bounce 0.5s ease 3';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                statusMessage.innerHTML = '<div class="success-message" style="color: #ff1744;">❌ Oops! Something went wrong. Please try again.</div>';
+            }
+            
+            setTimeout(() => {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
